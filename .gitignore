@@ -221,4 +221,5 @@ __marimo__/
 secrets.py
 
 # model weights
-.models\rubert_toxic_detector\best_model.pt
+*.pt
+*.pth
