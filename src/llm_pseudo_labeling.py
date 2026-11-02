@@ -46,10 +46,7 @@ OUTPUT_PATH = Path(
 )
 
 DEFAULT_BATCH_SIZE = "1" if BACKEND == "ollama" else "10"
-BATCH_SIZE = max(
-    1,
-    int(os.getenv("BATCH_SIZE", DEFAULT_BATCH_SIZE)),
-)
+BATCH_SIZE = 5
 
 DEFAULT_RETRIES = "2" if BACKEND == "ollama" else "5"
 MAX_RETRIES = max(
@@ -395,6 +392,7 @@ def create_client() -> tuple[AsyncOpenAI, str]:
 # 7. Запросы и повторные попытки
 # ============================================================
 
+
 async def completion_with_backoff(
     client: AsyncOpenAI,
     model: str,
@@ -403,26 +401,27 @@ async def completion_with_backoff(
     for attempt in range(MAX_RETRIES):
         try:
             if BACKEND == "openrouter":
-                # Не более примерно 18 запросов в минуту.
                 await asyncio.sleep(3.2)
 
-            request_options: dict[str, Any] = {}
+            request_options = {}
 
             if BACKEND == "ollama":
                 request_options["extra_body"] = {
                     "options": {
                         "num_ctx": OLLAMA_NUM_CTX,
+                        "repeat_penalty": 1.1,
+                        "repeat_last_n": 128,
+                        "top_k": 40,
                     }
                 }
 
             return await client.chat.completions.create(
                 model=model,
                 messages=messages,
-                temperature=0.0,
-                response_format={
-                    "type": "json_object",
-                },
-                max_tokens=4096,
+                temperature=0.2,
+                top_p=0.9,
+                response_format={"type": "json_object"},
+                max_tokens=512,
                 **request_options,
             )
 
@@ -448,6 +447,7 @@ async def completion_with_backoff(
             APITimeoutError,
             InternalServerError,
         ) as exc:
+
             status_code = getattr(exc, "status_code", None)
 
             print(
@@ -456,15 +456,6 @@ async def completion_with_backoff(
                 f"HTTP: {status_code}; "
                 f"детали: {exc}"
             )
-
-            # При 503 от локальной Ollama не повторяем
-            # бесконечно один и тот же запрос.
-            if (
-                BACKEND == "ollama"
-                and status_code == 503
-                and attempt >= 1
-            ):
-                raise
 
             if attempt == MAX_RETRIES - 1:
                 raise
@@ -486,6 +477,7 @@ async def completion_with_backoff(
     raise RuntimeError(
         "Не удалось получить ответ после повторных попыток."
     )
+
 
 
 # ============================================================
@@ -807,6 +799,9 @@ async def main() -> None:
                 "neutral_reference": neutral_text,
             }
         )
+
+    # for debugging
+    # rows = rows[:1]
 
     total_pending = len(rows)
 
