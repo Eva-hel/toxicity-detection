@@ -219,3 +219,6 @@ __marimo__/
 
 #api keys
 secrets.py
+
+# model weights
+.models\rubert_toxic_detector\best_model.pt

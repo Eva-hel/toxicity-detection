@@ -1,0 +1,142 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 1.4235812114771975,
+    "val_loss": 0.8172067544039558,
+    "token_macro_f1": 0.26425845327121283,
+    "token_micro_f1": 0.592378624597267,
+    "per_class_f1": {
+      "profanity": 0.6710067426179959,
+      "insult": 0.5593764328289775,
+      "derogation_mockery": 0.0,
+      "threat_violence": 0.0,
+      "hate_speech": 0.09090909090909091
+    }
+  },
+  {
+    "epoch": 2,
+    "train_loss": 0.7319549440696675,
+    "val_loss": 0.7010408955461839,
+    "token_macro_f1": 0.4125886880195804,
+    "token_micro_f1": 0.617046818727491,
+    "per_class_f1": {
+      "profanity": 0.6844640706543557,
+      "insult": 0.5925250683682771,
+      "derogation_mockery": 0.15053763440860216,
+      "threat_violence": 0.26875,
+      "hate_speech": 0.36666666666666664
+    }
+  },
+  {
+    "epoch": 3,
+    "train_loss": 0.5540773269309792,
+    "val_loss": 0.7087613835054285,
+    "token_macro_f1": 0.43525418388679926,
+    "token_micro_f1": 0.6344290138875013,
+    "per_class_f1": {
+      "profanity": 0.7201609298167189,
+      "insult": 0.5967384739279243,
+      "derogation_mockery": 0.11695906432748537,
+      "threat_violence": 0.3424124513618677,
+      "hate_speech": 0.4
+    }
+  },
+  {
+    "epoch": 4,
+    "train_loss": 0.43055938168238567,
+    "val_loss": 0.705953003729091,
+    "token_macro_f1": 0.4582027000075735,
+    "token_micro_f1": 0.6516142646127875,
+    "per_class_f1": {
+      "profanity": 0.738810955243821,
+      "insult": 0.6302281368821293,
+      "derogation_mockery": 0.18829516539440203,
+      "threat_violence": 0.28112449799196787,
+      "hate_speech": 0.45255474452554745
+    }
+  },
+  {
+    "epoch": 5,
+    "train_loss": 0.3281678908294247,
+    "val_loss": 0.7387661513160256,
+    "token_macro_f1": 0.493957776426819,
+    "token_micro_f1": 0.6583746178981764,
+    "per_class_f1": {
+      "profanity": 0.7394100687513862,
+      "insult": 0.6280799628079963,
+      "derogation_mockery": 0.19047619047619047,
+      "threat_violence": 0.34285714285714286,
+      "hate_speech": 0.5689655172413793
+    }
+  },
+  {
+    "epoch": 6,
+    "train_loss": 0.25334896980434335,
+    "val_loss": 0.8330351114273071,
+    "token_macro_f1": 0.4971039813099048,
+    "token_micro_f1": 0.6663747810858144,
+    "per_class_f1": {
+      "profanity": 0.7391688770999116,
+      "insult": 0.6410256410256411,
+      "derogation_mockery": 0.19631901840490798,
+      "threat_violence": 0.3482587064676617,
+      "hate_speech": 0.5607476635514018
+    }
+  },
+  {
+    "epoch": 7,
+    "train_loss": 0.1972776909348785,
+    "val_loss": 0.8479121678015765,
+    "token_macro_f1": 0.48908455697581105,
+    "token_micro_f1": 0.6616830414352841,
+    "per_class_f1": {
+      "profanity": 0.7335069444444444,
+      "insult": 0.6354191833776275,
+      "derogation_mockery": 0.1678832116788321,
+      "threat_violence": 0.30357142857142855,
+      "hate_speech": 0.6050420168067226
+    }
+  },
+  {
+    "epoch": 8,
+    "train_loss": 0.16488728640220499,
+    "val_loss": 0.8867829231654897,
+    "token_macro_f1": 0.48891394550333783,
+    "token_micro_f1": 0.6603532666524793,
+    "per_class_f1": {
+      "profanity": 0.7352549889135255,
+      "insult": 0.6321195144724556,
+      "derogation_mockery": 0.17454545454545456,
+      "threat_violence": 0.31336405529953915,
+      "hate_speech": 0.5892857142857143
+    }
+  },
+  {
+    "epoch": 9,
+    "train_loss": 0.1488881429196686,
+    "val_loss": 0.9117068437968984,
+    "token_macro_f1": 0.4895961547674793,
+    "token_micro_f1": 0.6610187667560322,
+    "per_class_f1": {
+      "profanity": 0.7305915988563888,
+      "insult": 0.637125748502994,
+      "derogation_mockery": 0.17391304347826086,
+      "threat_violence": 0.30985915492957744,
+      "hate_speech": 0.5964912280701754
+    }
+  },
+  {
+    "epoch": 10,
+    "train_loss": 0.14132977685620707,
+    "val_loss": 0.9103666614083683,
+    "token_macro_f1": 0.49162680895145827,
+    "token_micro_f1": 0.6609103507088796,
+    "per_class_f1": {
+      "profanity": 0.73215859030837,
+      "insult": 0.6346063177746346,
+      "derogation_mockery": 0.17164179104477612,
+      "threat_violence": 0.31627906976744186,
+      "hate_speech": 0.603448275862069
+    }
+  }
+]
