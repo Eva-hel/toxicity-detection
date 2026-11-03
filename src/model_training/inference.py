@@ -21,7 +21,7 @@ class RuBertToxicDetector(nn.Module):
     ):
         super().__init__()
         self.config = AutoConfig.from_pretrained(model_name, output_hidden_states=True)
-        self.rubert = AutoModel.from_pretrained(model_name, config=self.config)
+        self.rubert = AutoModel.from_pretrained(model_name, config=self.config, attn_implementation="eager")
 
         self.num_layers_pool = num_layers_pool
         self.layer_weights = nn.Parameter(torch.ones(num_layers_pool))
@@ -158,6 +158,9 @@ class ToxicSpanPredictor:
 
     @torch.no_grad()
     def predict_batch(self, texts: List[str], include_confidence: bool = False) -> List[Dict[str, Any]]:
+        
+        print("[DEBUG] predict_batch вызвана", flush=True)
+        
         """Предсказание для списка текстов."""
         if not texts:
             return []
@@ -175,10 +178,30 @@ class ToxicSpanPredictor:
         attention_mask = encoding["attention_mask"].to(self.device)
         offsets_batch = encoding["offset_mapping"].tolist()
 
-        with torch.amp.autocast("cuda", enabled=(self.device.type == "cuda")):
-            logits = self.model(input_ids=input_ids, attention_mask=attention_mask)
-            probabilities = torch.softmax(logits, dim=-1)
-            max_probs, pred_ids = torch.max(probabilities, dim=-1)
+        print(
+            f"[DEBUG] Устройство: {self.device}",
+            flush=True
+        )
+
+        print(
+            f"[DEBUG] Размер входных данных: {input_ids.shape}",
+            flush=True
+        )
+
+        if self.device.type == "cuda":
+            with torch.amp.autocast("cuda"):
+                logits = self.model(
+                    input_ids=input_ids,
+                    attention_mask=attention_mask
+                )
+        else:
+            logits = self.model(
+                input_ids=input_ids,
+                attention_mask=attention_mask
+            )
+
+        probabilities = torch.softmax(logits, dim=-1)
+        max_probs, pred_ids = torch.max(probabilities, dim=-1)
 
         pred_ids_batch = pred_ids.cpu().tolist()
         max_probs_batch = max_probs.cpu().tolist()
@@ -200,6 +223,11 @@ class ToxicSpanPredictor:
                 "text": text,
                 "entities": entities,
             })
+            
+        print(
+            f"[DEBUG] Forward завершён. Logits shape: {logits.shape}",
+            flush=True
+        )
 
         return results
 

@@ -3,9 +3,19 @@
 ## Quick start
 
 ```
-conda env -n toxicity-detection-model-training python=3.11 -y
+conda create -n toxicity-detection-model-training python=3.11 -y
 conda activate toxicity-detection-model-training
-python -m pip install -r requirements.txt
+python -m pip install -r dependencies\toxicity_detection_model_training.txt
+```
+
+**При запуске на CPU:**
+```
+python -m pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu
+```
+
+**При запуске на GPU:**
+```
+python -m pip install torch --index-url https://download.pytorch.org/whl/cu132
 ```
 
 ### Model inference
